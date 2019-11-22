@@ -122,9 +122,7 @@ TestResults constantListSizeTest(char testIndicator, int* list, int partitionSiz
 int main() {
 	srand(time(NULL));
 	int batchSize = 100;
-	int testingListSize = 2000;
-	int* list = generateRandomList(testingListSize);
-	for(int i = 5; i < 251; i++){
+	for(int i = 100; i < 20001; i+=100){
 		// int numberOfExecutions = (testingListSize % i) ? (testingListSize/i) + 1 : (testingListSize/i);
 		// if(testingListSize % i == 0){
 		// 	TestResults temp = constantListSizeTest('Z', list, i, batchSize);
@@ -135,9 +133,11 @@ int main() {
 		// 	printf("%d, %ld, %d\n", (int)(testingListSize/i) + 1, temp.mean, i);
 		// 	overflow = 0;
 		// }
-		int numberOfPartitions = (testingListSize % i) ? (testingListSize / i) + 1 : (testingListSize / i);
-		TestResults temp = constantListSizeTest('Z', list, i, batchSize);
+		int* list = generateRandomList(i);
+		int numberOfPartitions = (i % 250) ? (i / 250) + 1 : (i / 250);
+		TestResults temp = constantPartitionSizeTest('Z', list, i, batchSize);
 		printf("%d, %ld, %d\n", i, temp.mean, numberOfPartitions);
+		free(list);
 	}
 /*
 	int* listOfSize250 = generateRandomList(250);
