@@ -8,7 +8,7 @@
 #include "multitest.h"
 
 // Comment out this line for a random seed on every execution
-#define time(NULL) 0
+//#define time(NULL) 0
 
 typedef struct _TestResults {
 	long mean;
@@ -69,7 +69,7 @@ long testTime(char testIdentifier, int* list, int listSize, int partitionSize, i
 	gettimeofday(&end, NULL);
 	int seconds = end.tv_sec - start.tv_sec;
 	int microSeconds = ((seconds * 1000000) + end.tv_usec) - start.tv_usec;
-	printf("Test %c-%d | Found %d at : %d\n", testIdentifier, iteration, target, *index);
+	// printf("Test %c-%d | Found %d at : %d\n", testIdentifier, iteration, target, *index);
 	return microSeconds;
 }
 
@@ -97,7 +97,7 @@ TestResults constantPartitionSizeTest(char testIndicator, int* list, int listSiz
 }
 
 TestResults constantListSizeTest(char testIndicator, int* list, int partitionSize, int numberOfRuns) {
-	int listSize = 500;
+	int listSize = 5000;
 	int target = listSize / 2;
 	int targetIndex = -1;
 	long times[numberOfRuns];
@@ -122,14 +122,30 @@ TestResults constantListSizeTest(char testIndicator, int* list, int partitionSiz
 int main() {
 	srand(time(NULL));
 	int batchSize = 100;
-
+	int testingListSize = 2000;
+	int overflow = 1;
+	int numberOfExecutions = 0;
+	int* list = generateRandomList(testingListSize);
+	for(int i = 20; i < 251; i++){
+		// int numberOfExecutions = (testingListSize % i) ? (testingListSize/i) + 1 : (testingListSize/i);
+		// if(testingListSize % i == 0){
+		// 	TestResults temp = constantListSizeTest('Z', list, i, batchSize);
+		// 	printf("%d, %ld, %d\n", (int)(testingListSize/i), temp.mean, i);
+		// 	overflow = 1;
+		// }else if(overflow){
+		// 	TestResults temp = constantListSizeTest('Z', list, i, batchSize);
+		// 	printf("%d, %ld, %d\n", (int)(testingListSize/i) + 1, temp.mean, i);
+		// 	overflow = 0;
+		// }
+		int numberOfPartitions = (testingListSize % i) ? (testingListSize / i) + 1 : (testingListSize / i);
+		TestResults temp = constantListSizeTest('Z', list, i, batchSize);
+		printf("%d, %ld, %d\n", i, temp.mean, numberOfPartitions);
+	}
+/*
 	int* listOfSize250 = generateRandomList(250);
 	TestResults a = constantPartitionSizeTest('A', listOfSize250, 250, batchSize);
 	free(listOfSize250); 
 	listOfSize250 = NULL;
-
-	int* listOfSize500 = generateRandomList(500);
-	TestResults b = constantPartitionSizeTest('B', listOfSize500, 500, batchSize);
 
 	int* listOfSize1000 = generateRandomList(1000);
 	TestResults c = constantPartitionSizeTest('C', listOfSize1000, 1000, batchSize);
@@ -156,16 +172,22 @@ int main() {
 	free(listOfSize8000); 
 	listOfSize8000 = NULL;
 
+	int* listOfSize500 = generateRandomList(500);
+	TestResults b = constantPartitionSizeTest('B', listOfSize500, 500, batchSize);
 	TestResults h = constantListSizeTest('H', listOfSize500, 125, batchSize);
 	TestResults i = constantListSizeTest('I', listOfSize500, 84, batchSize);
 	TestResults j = constantListSizeTest('J', listOfSize500, 63, batchSize);
 	TestResults k = constantListSizeTest('K', listOfSize500, 50, batchSize);
     TestResults l = constantListSizeTest('L', listOfSize500, 42, batchSize);
     TestResults m = constantListSizeTest('M', listOfSize500, 36, batchSize);
+	TestResults n = constantListSizeTest('N', listOfSize500, 5, batchSize);
+	TestResults o = constantListSizeTest('O', listOfSize500, 10, batchSize);
+	TestResults p = constantListSizeTest('P', listOfSize500, 1, batchSize);
 	free(listOfSize500);
+*/
 
     printf("Running in %s mode *******************\n", RUNNINGMODE);
-
+/*
 	printf("Test A: List Size = 250 | Partition Size = 250 | 1 %s\n", RUNNINGMODE);
 	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", a.mean, a.stdDev, a.min, a.max);
 	printf("Test B: List Size = 500 | Partition Size = 250 | 2 %s\n", RUNNINGMODE);
@@ -193,6 +215,12 @@ int main() {
 	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", l.mean, l.stdDev, l.min, l.max);
     printf("Test M: List Size = 500 | Partition Size = 36 | 14 %s\n", RUNNINGMODE);
 	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", m.mean, m.stdDev, m.min, m.max);
-	
+	printf("Test N: List Size = 500 | Partition Size = 5 | 100 %s\n", RUNNINGMODE);
+	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", n.mean, n.stdDev, n.min, n.max);
+	printf("Test O: List Size = 500 | Partition Size = 10 | 50 %s\n", RUNNINGMODE);
+	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", o.mean, o.stdDev, o.min, o.max);
+	printf("Test P: List Size = 500 | Partition Size = 1 | 500 %s\n", RUNNINGMODE);
+        printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", p.mean, p.stdDev, p.min, p.max);	
+*/
 	return 0;
 }
