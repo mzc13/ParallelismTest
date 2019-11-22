@@ -146,15 +146,22 @@ int main() {
 	free(listOfSize4000); 
 	listOfSize4000 = NULL;
 
+    int* listOfSize6000 = generateRandomList(6000);
+    TestResults f = constantPartitionSizeTest('F', listOfSize6000, 6000, batchSize);
+    free(listOfSize6000);
+    listOfSize6000 = NULL;
+
 	int* listOfSize8000 = generateRandomList(8000);
-	TestResults f = constantPartitionSizeTest('F', listOfSize8000, 8000, batchSize);
+	TestResults g = constantPartitionSizeTest('G', listOfSize8000, 8000, batchSize);
 	free(listOfSize8000); 
 	listOfSize8000 = NULL;
 
-	TestResults g = constantListSizeTest('G', listOfSize500, 100, batchSize);
-	TestResults h = constantListSizeTest('H', listOfSize500, 50, batchSize);
-	TestResults i = constantListSizeTest('I', listOfSize500, 25, batchSize);
-	TestResults j = constantListSizeTest('J', listOfSize500, 10, batchSize);
+	TestResults h = constantListSizeTest('H', listOfSize500, 125, batchSize);
+	TestResults i = constantListSizeTest('I', listOfSize500, 84, batchSize);
+	TestResults j = constantListSizeTest('J', listOfSize500, 63, batchSize);
+	TestResults k = constantListSizeTest('K', listOfSize500, 50, batchSize);
+    TestResults l = constantListSizeTest('L', listOfSize500, 42, batchSize);
+    TestResults m = constantListSizeTest('M', listOfSize500, 36, batchSize);
 	free(listOfSize500);
 
     printf("Running in %s mode *******************\n", RUNNINGMODE);
@@ -169,18 +176,23 @@ int main() {
 	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", d.mean, d.stdDev, d.min, d.max);
 	printf("Test E: List Size = 4000 | Partition Size = 250 | 16 %s\n", RUNNINGMODE);
 	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", e.mean, e.stdDev, e.min, e.max);
-	printf("Test F: List Size = 8000 | Partition Size = 250 | 32 %s\n", RUNNINGMODE);
-	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n\n", f.mean, f.stdDev, f.min, f.max);
+    printf("Test F: List Size = 6000 | Partition Size = 250 | 24 %s\n", RUNNINGMODE);
+	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", f.mean, f.stdDev, f.min, f.max);
+	printf("Test G: List Size = 8000 | Partition Size = 250 | 32 %s\n", RUNNINGMODE);
+	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n\n", g.mean, g.stdDev, g.min, g.max);
 
-	printf("Test G: List Size = 500 | Partition Size = 100 | 5 %s\n", RUNNINGMODE);
-	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", g.mean, g.stdDev, g.min, g.max);
-	printf("Test H: List Size = 500 | Partition Size = 50 | 10 %s\n", RUNNINGMODE);
+	printf("Test H: List Size = 500 | Partition Size = 125 | 4 %s\n", RUNNINGMODE);
 	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", h.mean, h.stdDev, h.min, h.max);
-	printf("Test I: List Size = 500 | Partition Size = 25 | 20 %s\n", RUNNINGMODE);
+	printf("Test I: List Size = 500 | Partition Size = 84 | 6 %s\n", RUNNINGMODE);
 	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", i.mean, i.stdDev, i.min, i.max);
-	// Maybe add another test here?
-	printf("Test J: List Size = 500 | Partition Size = 10 | 50 %s\n", RUNNINGMODE);
+	printf("Test J: List Size = 500 | Partition Size = 63 | 8 %s\n", RUNNINGMODE);
 	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", j.mean, j.stdDev, j.min, j.max);
+	printf("Test K: List Size = 500 | Partition Size = 50 | 10 %s\n", RUNNINGMODE);
+	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", k.mean, k.stdDev, k.min, k.max);
+    printf("Test L: List Size = 500 | Partition Size = 42 | 12 %s\n", RUNNINGMODE);
+	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", l.mean, l.stdDev, l.min, l.max);
+    printf("Test M: List Size = 500 | Partition Size = 36 | 14 %s\n", RUNNINGMODE);
+	printf("\tResults -> Mean: %ld | StdDev: %ld | Min: %ld | Max: %ld\n\n", m.mean, m.stdDev, m.min, m.max);
 	
 	return 0;
 }
