@@ -97,7 +97,7 @@ TestResults constantPartitionSizeTest(char testIndicator, int* list, int listSiz
 }
 
 TestResults constantListSizeTest(char testIndicator, int* list, int partitionSize, int numberOfRuns) {
-	int listSize = 5000;
+	int listSize = 2000;
 	int target = listSize / 2;
 	int targetIndex = -1;
 	long times[numberOfRuns];
@@ -123,10 +123,8 @@ int main() {
 	srand(time(NULL));
 	int batchSize = 100;
 	int testingListSize = 2000;
-	int overflow = 1;
-	int numberOfExecutions = 0;
 	int* list = generateRandomList(testingListSize);
-	for(int i = 20; i < 251; i++){
+	for(int i = 5; i < 251; i++){
 		// int numberOfExecutions = (testingListSize % i) ? (testingListSize/i) + 1 : (testingListSize/i);
 		// if(testingListSize % i == 0){
 		// 	TestResults temp = constantListSizeTest('Z', list, i, batchSize);
